@@ -126,13 +126,49 @@ def polarity_percentage(df):
     result[-1] = round((result[-1]/total_processed) * 100)
     return result
 
+
+# ----------Clustering----------
+from collections import Counter
+import nltk # text preprocesing lib
+from nltk.tokenize import word_tokenize #?
+from nltk.corpus import stopwords
+from nltk.tag import pos_tag
+from nltk.stem import WordNetLemmatizer
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download("wordnet")
+nltk.download("omw-1.4")
+stop_words = set(stopwords.words('english'))
+wnl = WordNetLemmatizer()
+
+# splits a string into words
+def tokenize(string):
+    return word_tokenize(string)
+
+# applies transformation for clustering text: all lowercased, remove punctuations, numbers, stop words
+# returns the top n list of words that are nouns, adjectives and lemmatized
+def cluster_clean(df):
+    df['review'] = df['review'].str.lower()
+    df['review'] = df['review'].replace('[^A-Za-z\s]', '', regex=True)
+    token_list = df['review'].apply(tokenize).sum()
+    tagged_tokens = pos_tag(token_list)
+    filtered_words = [w for w, tag in tagged_tokens if tag.startswith('NN') or tag.startswith('JJ')]
+    filtered_words = [w for w in token_list if not w in stop_words]
+    lem_list = []
+    for w in filtered_words:
+        lem_list.append(wnl.lemmatize(w))
+    lem_list[:] = (value for value in lem_list if value != "game")
+    return lem_list
+
+# returns default top 7 words from review data frame
+# tokens = processed dataframe from cluster_clean
+def top_cluster(tokens,top=7):
+    frequency = nltk.FreqDist(tokens)
+    return sorted(frequency,key=frequency.__getitem__, reverse=True)[0:top]
+
+
 print("test")
-
-
-# ----------MODEL----------
-# Clustering - Word cloud
-
-
 # ----------ADD ONS----------
 # FILTER; drop down | Radio button: specify hours played at review [<10, <30, >30]
 
