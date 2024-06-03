@@ -1,9 +1,5 @@
-msg = "test"
-print(msg)
 
 import requests 
-# from bs4 import BeautifulSoup 
-
 
 #100k calls per day
 steam_url = "https://store.steampowered.com/"

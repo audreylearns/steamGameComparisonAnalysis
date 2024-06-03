@@ -1,6 +1,6 @@
 #ingestion ?
 import pandas as pd
-import utils.fetch as fetch
+# import fetch as fetch
 from transformers import AutoTokenizer,  AutoConfig
 from transformers import AutoModelForSequenceClassification
 from scipy.special import softmax
@@ -109,7 +109,7 @@ def sentiment_score(dataframe):
     # model token max at 512
     dataframe['rev_len'] = dataframe['review'].str.len()
     # process reviews up to 2300 characters
-    dataframe = dataframe.loc[(dataframe['rev_len'] <= 2300)].copy()
+    dataframe = dataframe.loc[(dataframe['rev_len'] <= 1000)].copy()
     dataframe['sentiment'] = dataframe['review'].apply(polarity_scores)
 
     return dataframe    
