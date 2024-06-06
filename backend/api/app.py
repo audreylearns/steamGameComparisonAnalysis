@@ -56,7 +56,7 @@ def game():
 
     return game
 
-
+# http://127.0.0.1:5000/api/currency?value=1&code=JPY
 # return new currency converted, else def..USD  (return was CAD tho)
 @app.route('/api/currency')
 def currency():
