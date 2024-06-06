@@ -56,7 +56,7 @@ def convert_currency(value, target='USD'):
     if (target != 'USD'):
         conv_rate = requests.get("https://open.er-api.com/v6/latest/USD").json()
         conv_rate = conv_rate["rates"][target]
-        return round(value * float(conv_rate),2)
+        return round(int(value) * float(conv_rate),2)
 # quick test:
 # print(convert_currency(2.99, 'CNY'))
 

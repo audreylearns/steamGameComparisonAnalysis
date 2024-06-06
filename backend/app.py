@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -11,6 +11,7 @@ from model import fetch as fetch
 # df = analysis.remove_noise(sample)
 #routes & rate limiter
 #doc https://flask-limiter.readthedocs.io/en/stable/#rate-limit-domain
+
 
 # main page, allow user to input name of game
 # page allows input, input calls /search
@@ -30,13 +31,13 @@ def search():
 
 # return the game obj w details
 # gameID from cheapshark
+# http://127.0.0.1:5000/game?id1=202589
 @app.route("/game")
 def game():
     id1 = request.args.get('id1') 
 
     # review if param is missing, only add if in
     id2 = request.args.get('id2')
-    currency = request.args.get('currency')
     
     # display data...sample 202589
     game = {}
@@ -53,9 +54,16 @@ def game():
     df = analysis.cluster_clean(df)
     game["keywords"] = analysis.top_cluster(df)
 
-    game["currency"] = fetch.convert_currency(game["details"]["price_overview"]["final"]/100, currency)
-    # TODO: return 2 objs, for jotai (comparison)
     return game
+
+
+# return new currency converted, else def..USD  (return was CAD tho)
+@app.route('/currency')
+def currency():
+    val = request.args.get('value')
+    change_code = request.args.get('code')    
+    val = fetch.convert_currency(val, change_code)
+    return  str(val)
 
 # TODO: Limiter set up
 # steam_limiter = Limiter(
