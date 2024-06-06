@@ -23,7 +23,7 @@ def home():
 # after user has enter name of game, display search results
 # http://127.0.0.1:5000/search?title=ham
 # http://127.0.0.1:5000/search?title=ham%20and%20cheese
-@app.route("/search")
+@app.route("/api/search")
 def search():
     title = request.args.get('title')  ## There is it
     gameList = fetch.game_search(title)
@@ -32,7 +32,7 @@ def search():
 # return the game obj w details
 # gameID from cheapshark
 # http://127.0.0.1:5000/game?id1=202589
-@app.route("/game")
+@app.route("/api/game")
 def game():
     id1 = request.args.get('id1') 
 
@@ -58,7 +58,7 @@ def game():
 
 
 # return new currency converted, else def..USD  (return was CAD tho)
-@app.route('/currency')
+@app.route('/api/currency')
 def currency():
     val = request.args.get('value')
     change_code = request.args.get('code')    
