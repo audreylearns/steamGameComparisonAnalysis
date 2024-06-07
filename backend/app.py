@@ -31,6 +31,7 @@ def search():
 
 # return the game obj w details
 # gameID from cheapshark
+# TODO: When fetch updated, input is steamappid instead of cheapshark's gameid
 # http://127.0.0.1:5000/game?id1=202589
 @app.route("/api/game")
 def game():
