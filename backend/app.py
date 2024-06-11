@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template
-
 # from flask_limiter import Limiter
 # from flask_limiter.util import get_remote_address
 app = Flask(__name__)
@@ -21,18 +20,18 @@ def home():
     return "Hello audrey"
 
 # after user has enter name of game, display search results
-# http://127.0.0.1:5000/search?title=ham
-# http://127.0.0.1:5000/search?title=ham%20and%20cheese
+# http://127.0.0.1:5000/api/search?title=sims
 @app.route("/api/search")
 def search():
     title = request.args.get('title')  ## There is it
     gameList = fetch.game_search(title)
     return gameList
 
+
 # return the game obj w details
 # gameID from cheapshark
 # TODO: When fetch updated, input is steamappid instead of cheapshark's gameid
-# http://127.0.0.1:5000/game?id1=202589
+# http://127.0.0.1:5000/api/game?id1=1222670
 @app.route("/api/game")
 def game():
     id1 = request.args.get('id1') 
@@ -42,7 +41,8 @@ def game():
     
     # display data...sample 202589
     game = {}
-    game["id"] = fetch.get_steamID(id1)
+    game["id"] = id1
+    # game["id"] = fetch.get_steamID(id1)
     game["details"] = fetch.get_game_details(game["id"]) 
     game["RevSummary"] = fetch.get_reviewSummary(game["id"])
 
@@ -89,4 +89,4 @@ def currency():
 # )
 
 if __name__ == "__main__": 
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)

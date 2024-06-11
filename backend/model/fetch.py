@@ -1,10 +1,12 @@
 
 import requests 
-
+import re
 #100k calls per day
 steam_url = "https://store.steampowered.com/"
 cheapshark_url = "https://www.cheapshark.com/api/1.0/games?"
- 
+
+# UPDATE TODO: rm cheapshark to:
+steamSearch_url = "https://steamcommunity.com/actions/SearchApps/"
 
 # app id = gameid, n = total num of revs to fetch
 # returns list of revs, dict struct
@@ -71,9 +73,12 @@ def convert_currency(value, target='USD'):
 # imp "external" for title display + "thumb" prev img, "gameid" for to grab steamappid
 # return null if game not avail on steam
 def game_search(title):
-    res = requests.get(url=cheapshark_url+"title=" + title).json() 
+    res = requests.get(url=steamSearch_url+title).json()
+    # res = requests.get(url=cheapshark_url+"title=" + title).json() 
     # check if game exist in steam, ie steamAppID != null, return empty
     # TODO: combine below getsteamID
+    for games in res:
+        games["name"]= re.sub(r'[^a-zA-Z0-9\s]', '', games["name"])
     return res
 
 
