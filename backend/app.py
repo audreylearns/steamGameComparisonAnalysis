@@ -1,8 +1,10 @@
 from flask import Flask, request, render_template
+from flask_cors import CORS
+
 # from flask_limiter import Limiter
 # from flask_limiter.util import get_remote_address
 app = Flask(__name__)
-
+CORS(app)
 # importing module (pipeline)
 from model import pipeline as analysis
 from model import fetch as fetch
