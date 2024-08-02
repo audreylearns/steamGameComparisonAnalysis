@@ -2,6 +2,8 @@ import GameSearch from "@/components/gameSearch";
 // import React, { useState,useEffect} from "react";
 import { Container, Card,  Button, Form } from 'react-bootstrap'
 
+
+
 export default function Home() {
 
   return (
