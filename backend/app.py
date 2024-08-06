@@ -33,17 +33,14 @@ def search():
 # return the game obj w details
 # gameID from cheapshark
 # TODO: When fetch updated, input is steamappid instead of cheapshark's gameid
-# http://127.0.0.1:5000/api/game?id1=1222670
+# http://127.0.0.1:5000/api/game?id=1222670
 @app.route("/api/game")
 def game():
-    id1 = request.args.get('id1') 
-
-    # review if param is missing, only add if in
-    id2 = request.args.get('id2')
+    id = request.args.get('id') 
     
     # display data...sample 202589
     game = {}
-    game["id"] = id1
+    game["id"] = id
     # game["id"] = fetch.get_steamID(id1)
     game["details"] = fetch.get_game_details(game["id"]) 
     game["RevSummary"] = fetch.get_reviewSummary(game["id"])

@@ -5,10 +5,9 @@ import { useAtom } from 'jotai';
 import useSWR from "swr";
 import { gameCtAtom, gameID1Atom, gameID2Atom } from '@/atoms';
 
-export default function GameSearch(props){
+export default function GameSearch(){
 
   const [search, setSearch] = useState(false)
-  const [gameID, setGameID] = useState("")
   const [searchResult, setSearchResult] = useState([])
   const [gameTitle, setGameTitle] = useState("")
 
@@ -20,7 +19,7 @@ export default function GameSearch(props){
     }
   });
   
-  const [gameCt, setGameCtAtom] = useAtom(gameCtAtom);
+  const [gameCt, setGameCt] = useAtom(gameCtAtom);
   const [gameID1, setGameID1] = useAtom(gameID1Atom);
   const [gameID2, setGameID2] = useAtom(gameID2Atom);
 
@@ -44,8 +43,10 @@ export default function GameSearch(props){
     // set gameid
     if (gameCt == 2 ){
       setGameID2(id)
+      setGameCt(2)
     }else{
       setGameID1(id)
+      setGameCt(1)
     }
   }
   return (
