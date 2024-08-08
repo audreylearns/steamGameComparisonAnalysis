@@ -4,6 +4,7 @@ import Currency from '@/components/currency';
 
 export default function GameData({id}){
     const { data, isLoading, error,} = useSWR("http://localhost:8080/api/game?id="+ id)
+// add a api to perform most recent helpful review array: pos, neut, neg + polarity score
 
     return (
         <>
@@ -20,8 +21,13 @@ export default function GameData({id}){
                         <span class="max-w-96 min-w-96 font-bold text-2xl font-mono uppercase">{data.details.name}</span>
                         <div class="max-w-96 min-w-96">
                             <Container class="flex">
-                                <a class="hover:underline text-sm" href={data.details.website}>{data.details.developers}</a>                      
-                                <p className="self-end text-right"> <Currency val={data.details.price_overview.final/100}/></p>
+                                <a class="hover:underline text-sm" href={data.details.website}>{data.details.developers}</a>       
+                                {data.details.is_free == false ?
+                                    (<p className="self-end text-right"> <Currency val={data.details.price_overview.final/100}/></p>) : (
+                                        <p className="self-end text-right"> F R E E </p>
+                                    )
+                                }               
+                                
                             </Container>
                             <br/>
                             <span class="text-sm">{data.details.short_description}<br/><br/></span>
@@ -38,15 +44,15 @@ export default function GameData({id}){
                             <Container class="flex">
                                 <img class="inline" src="./pos.png"/>
                                 <span> {data.result[1]} %</span>
-                                {/* Review sample */}
+                                {/* Carousel: Review sample + score */}
                                 <br/><br/>
                                 <img   class="inline" src="./neut.png"/>
                                 <span> {data.result[0]} %</span>
-                                {/* Review sample */}
+                                {/* Carousel: Review sample + score */}
                                 <br/><br/>
                                 <img   class="inline" src="./neg.png"/>
                                 <span> {data.result[-1]} %</span>
-                                {/* Review sample */}
+                                {/* Carousel: Review sample + score */}
                                 <br/>
                             </Container>
      

@@ -4,7 +4,6 @@ Owner: Audrey Duzon
 
 import { Container } from 'react-bootstrap'
 
-
 export default function Layout(props){
     return (
         <>  
