@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { Image, Container } from "react-bootstrap";
+import { Image, Container, Button } from "react-bootstrap";
 import Currency from '@/components/currency';
 
 export default function GameData({id}){
@@ -37,7 +37,8 @@ export default function GameData({id}){
                             <hr className="h-1 bg-black"/>
                             <br/>
                             <p class="font-bold text-center">Sentiment Analysis</p>
-                            <p>STEAM scored {data.details.name} at <u>{Math.round(data.RevSummary.score)}% out of {data.RevSummary.total} reviews!</u></p><br/>
+                            <p>STEAM scored {data.details.name} at <u>{Math.round(data.RevSummary.score)}% out of {data.RevSummary.total} (english) reviews!</u></p><br/>
+                            <p>Recommended by a total of <u>{data.details.recommendations.total}</u> users! </p>
                             <br/>
                             Our In-depth analysis concluded: 
                             <br/><br/>
@@ -55,9 +56,17 @@ export default function GameData({id}){
                                 {/* Carousel: Review sample + score */}
                                 <br/>
                             </Container>
+                            <br/>
+                            <hr className="h-1 bg-black"/>
+                            <p class="font-bold text-center">Reviews Clustering Analysis</p>
+                            <p> <u>TOP 7</u> : 
+                            {data.keywords.map((w)=> (
+                                <span class="text-xs font-light">{  w  } </span>
+                            ))}
+                            </p>
      
-                        </div>
-
+                        </div><br/>
+                        <p className="text-center"><Button className="place-self-start border  bg-black text-white rounded border-black hover:bg-white hover:border-black hover:text-black px-1" variant="outline-light" type="button"  href={`https://store.steampowered.com/app/${id}`}> Get on steam </Button></p>                                                                       
                     </>
                 )
             }
