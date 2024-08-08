@@ -41,13 +41,15 @@ export default function GameSearch(){
 
   function gameAnalysis(id){
     // set gameid
-    if (gameCt == 2 ){
-      setGameID2(id)
-      setGameCt(2)
-    }else{
+
+    if (gameCt == 0){
       setGameID1(id)
       setGameCt(1)
+    }else{
+      setGameID2(id)
+      setGameCt(2)
     }
+
   }
   return (
       <>
