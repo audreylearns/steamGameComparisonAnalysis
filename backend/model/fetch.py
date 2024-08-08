@@ -54,12 +54,14 @@ def get_game_details(appid):
 # detailed desc has tags
 
 
-# use the rtn to create a drop down list from keys
-def convert_currency(value, target='USD'):
-    if (target != 'USD'):
+# converts steam CAD currency to target parameter
+def convert_currency(value, target='CAD'):
+    if (target != 'CAD'):
         conv_rate = requests.get("https://open.er-api.com/v6/latest/USD").json()
-        conv_rate = conv_rate["rates"][target]
-        return round(int(value) * float(conv_rate),2)
+        CADtoUSD = conv_rate["rates"]['CAD']
+        value = float(value)/float(CADtoUSD)
+        targetRate = conv_rate["rates"][target]
+        return round(float(value) * float(targetRate),2)
 # quick test:
 # print(convert_currency(2.99, 'CNY'))
 

@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import { Image, Container } from "react-bootstrap";
+import Currency from '@/components/currency';
 
 export default function GameData({id}){
     const { data, isLoading, error,} = useSWR("http://localhost:8080/api/game?id="+ id)
@@ -20,7 +21,7 @@ export default function GameData({id}){
                         <div class="max-w-96 min-w-96">
                             <Container class="flex">
                                 <a class="hover:underline text-sm" href={data.details.website}>{data.details.developers}</a>                      
-                                <p className="self-end text-right">$ xx.xx{/* add the price component, right aligned w drop down */}</p>
+                                <p className="self-end text-right"> <Currency val={data.details.price_overview.final/100}/></p>
                             </Container>
                             <br/>
                             <span class="text-sm">{data.details.short_description}<br/><br/></span>
