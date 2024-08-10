@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 # from flask_limiter import Limiter
@@ -41,7 +41,7 @@ def game():
     # display data...sample 202589
     game = {}
     game["id"] = id
-    # game["id"] = fetch.get_steamID(id1)
+
     game["details"] = fetch.get_game_details(game["id"]) 
     game["RevSummary"] = fetch.get_reviewSummary(game["id"])
 
@@ -49,12 +49,17 @@ def game():
     df = analysis.remove_noise(data)
     df = analysis.filterby_score(df)
     df = analysis.sentiment_score(df)
+
     game["result"] = analysis.polarity_percentage(df)
     
+    game["pos_review"] = analysis.review_sample(df, 'pos')
+    game["neg_review"] = analysis.review_sample(df, 'neg')
+    game["neu_review"] = analysis.review_sample(df, 'neu')
+
     df = analysis.cluster_clean(df)
     game["keywords"] = analysis.top_cluster(df)
 
-    return game
+    return jsonify(game)
 
 # http://127.0.0.1:5000/api/currency?value=1&code=JPY
 # return new currency converted, else def..USD  (return was CAD tho)

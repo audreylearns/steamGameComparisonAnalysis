@@ -103,6 +103,31 @@ def polarity_scores(string, score=True):
     else:
         return scores_dict
 
+
+# Returns a dataframe with 2 columns: a) top reviews for sentiment category  b)detailed polarity score for the review
+# Ct, number of reviews to provide detailed scoring
+# sentiment, sentiment category: 'neg', 'neu', 'pos'
+def review_sample(dataframe, sentiment, ct=3,):
+    match sentiment:
+        case 'neg':
+            sentiment = dataframe.loc[(dataframe["sentiment"] == -1)].copy()
+        case 'neu':
+            sentiment = dataframe.loc[(dataframe["sentiment"] == 0)].copy()
+        case 'pos':
+            sentiment = dataframe.loc[(dataframe["sentiment"] == 1)].copy()
+
+    sentiment = sentiment.sort_values(by=['score'],ascending=False) 
+    sentiment = sentiment.head(ct).copy()
+    sentiment['detailed_score'] = sentiment['review'].apply(polarity_scores, score=False)
+   
+    rtn = pd.json_normalize(sentiment['detailed_score']) 
+    rtn = rtn.map(lambda x: round(x * 100)) 
+    rev = sentiment['review'].reset_index(drop=True)
+    rtn  = rtn .reset_index(drop=True)
+    rtn  = pd.concat([rtn , rev], axis=1)
+
+    return rtn.to_dict(orient='records')
+
 # Adds sentiment score column to dataframe
 # Input: a dataframe column to run analysis
 def sentiment_score(dataframe):
