@@ -43,23 +43,27 @@ def game():
     game["id"] = id
 
     game["details"] = fetch.get_game_details(game["id"]) 
-    game["RevSummary"] = fetch.get_reviewSummary(game["id"])
+    if game["details"] != "game unreleased" :
+        game["RevSummary"] = fetch.get_reviewSummary(game["id"])
 
-    data = fetch.get_rev(game["id"], 300)
-    df = analysis.remove_noise(data)
-    df = analysis.filterby_score(df)
-    df = analysis.sentiment_score(df)
+        data = fetch.get_rev(game["id"], 300)
+        df = analysis.remove_noise(data)
+        df = analysis.filterby_score(df)
+        df = analysis.sentiment_score(df)
 
-    game["result"] = analysis.polarity_percentage(df)
+        game["result"] = analysis.polarity_percentage(df)
+        
+        game["pos_review"] = analysis.review_sample(df, 'pos')
+        game["neg_review"] = analysis.review_sample(df, 'neg')
+        game["neu_review"] = analysis.review_sample(df, 'neu')
+
+        df = analysis.cluster_clean(df)
+        game["keywords"] = analysis.top_cluster(df)
+
+        return jsonify(game)
+    return jsonify(game["details"] ) 
     
-    game["pos_review"] = analysis.review_sample(df, 'pos')
-    game["neg_review"] = analysis.review_sample(df, 'neg')
-    game["neu_review"] = analysis.review_sample(df, 'neu')
 
-    df = analysis.cluster_clean(df)
-    game["keywords"] = analysis.top_cluster(df)
-
-    return jsonify(game)
 
 # http://127.0.0.1:5000/api/currency?value=1&code=JPY
 # return new currency converted, else def..USD  (return was CAD tho)

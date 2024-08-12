@@ -10,7 +10,7 @@ export default function Layout(props){
             <header className="py-4 fixed-top text-6xl font-bold text-black text-center border-y-4 border-black font-mono">
                 STEAM SENTIMENT ANALYSIS
             </header>
-            <br />
+            <br /><br /><br /><br /><br/><br/><br/><br/><br/><br/>
             <Container>
                 {props.children}
             </Container>

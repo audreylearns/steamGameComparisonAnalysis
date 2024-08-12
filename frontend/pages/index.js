@@ -18,11 +18,11 @@ export default function Home() {
   return (
 
     <main>
-      <br/><br/><br/><br/>
-      <Container fluid className="grid grid-flow-col place-content-center font-mono text-black space-x-10"> 
+      
+      <Container fluid className="grid grid-flow-col place-content-center font-mono text-black space-x-4"> 
         {gameCt == 0 &&
             <Card  className="border-4 border-black rounded-lg p-8">
-              <Card.Body><GameSearch/></Card.Body>
+              <Card.Body className="overflow-y-auto max-h-96" ><GameSearch/></Card.Body>
             </Card>
         }
 
@@ -31,12 +31,12 @@ export default function Home() {
             <Card  className="border-4 border-black rounded-lg p-8">
               <Card.Body class="overflow-y-auto max-h-96"><GameData id={gameID1}/></Card.Body>
             </Card>
-            {add == true && gameID1 != gameID2? (
+            {add == true? (
               <Card  className="border-4 border-black rounded-lg p-8">
-                <Card.Body><GameSearch/></Card.Body>
+                <Card.Body className="overflow-y-auto max-h-96"><GameSearch/></Card.Body>
               </Card>
             ):(
-              <Button className="place-self-start border  bg-black text-white rounded border-black hover:bg-white hover:border-black hover:text-black" variant="outline-light" type="button"  
+              <Button className="place-self-start border rounded-md border-black hover:bg-white hover:border-black hover:text-black" variant="dark" type="button"  
               onClick={() => {
                 setAdd(true);
                 setShow1(true);
@@ -56,7 +56,7 @@ export default function Home() {
                     <GameData id={gameID1}/>
                   </Card.Body>
                 </Card>
-                <Button className="place-self-start border  bg-black text-white rounded border-black hover:bg-white hover:border-black hover:text-black" variant="outline-light" type="button"  
+                <Button className="place-self-start border rounded-md border-black hover:bg-white hover:border-black hover:text-black" variant="dark" type="button"  
                   onClick={() => 
                     {setShow1(false);
                       setAdd(false);
@@ -70,12 +70,25 @@ export default function Home() {
 
             {show2 == true? (
               <>
-                <Card data-bs-theme="dark" className="border-4 border-black rounded-lg p-8">
+                <Card className="border-4 border-black rounded-lg p-8">
                   <Card.Body class="overflow-y-auto max-h-96">
-                    <GameData id={gameID2}/>
+                    {gameID1 != gameID2?
+                      (
+                        <GameData id={gameID2}/>
+                      ):
+                      (
+                        <>
+                          <p>The game you searched for is already displayed</p>
+                          <br/><br/>
+                          <GameSearch/>
+                        </>
+                        
+                      )
+                    }
+                    
                   </Card.Body>
                 </Card>
-                <Button className="place-self-start border  bg-black text-white rounded border-black hover:bg-white hover:border-black hover:text-black" variant="outline-light" type="button"  
+                <Button className="place-self-start border rounded-md border-black hover:bg-white hover:border-black hover:text-black" variant="dark" type="button"  
                 onClick={() => 
                   {setShow2(false);
                     setAdd(false);

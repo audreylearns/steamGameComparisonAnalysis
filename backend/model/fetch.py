@@ -42,9 +42,10 @@ def get_rev(appid, n=100):
 
 def get_game_details(appid):
     details = requests.get(url=steam_url+'api/appdetails?appids='+appid).json()
-    # Add a regex cleaner for short desc
-    # details = requests.get("https://store.steampowered.com/api/appdetails?appids=774171").json()
-    return details[appid]["data"]
+    if details[appid]["data"]["release_date"]["coming_soon"]:
+        return "game unreleased"
+    else:
+        return details[appid]["data"]
 # price and deals details[appid]["data"]["price_overview"]
 
 

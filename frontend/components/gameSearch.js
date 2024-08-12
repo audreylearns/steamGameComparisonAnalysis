@@ -48,6 +48,7 @@ export default function GameSearch(){
     }else{
       setGameID2(id)
       setGameCt(2)
+
     }
 
   }
@@ -55,29 +56,39 @@ export default function GameSearch(){
       <>
         {search === false ? (
           <>
-            <p class="text-center">Enter the game title:</p>
-            <form class="text-center" onSubmit={handleSubmit(submitForm)}>
-                <input class="text-center border text-center border-3 border-black" {...register("title")} /><br /><br />
-                <Button class="border bg-black text-white rounded-md border-black hover:bg-white hover:border-black hover:text-black" variant="outline-light" type="submit">search</Button>
+            <p className="text-center">Enter the game title:</p>
+            <form className="text-center" onSubmit={handleSubmit(submitForm)}>
+                <input className="text-center border text-center border-3 border-black" {...register("title")} /><br /><br />
+                <Button className="border rounded-md border-black hover:bg-white hover:border-black hover:text-black" variant="dark" type="submit">search</Button>
             </form>
           </>
       ) : (
-        <Accordion>
-          {searchResult?.length == 0 && <p>We're sorry, "{gameTitle}" is not available in Steam! </p> }
-          {
-            searchResult?.map(game =>{
-              return(
-                <Accordion.Item eventKey={game.appid} className="border border-black">
-                  <Accordion.Body className="grid grid-cols-1 p-3">
-                    <Image style={{verticalAlign: "center" }}src={game.logo} rounded /> 
-                    <p class="text-centered">{game.name }</p>
-                    <Button className="place-self-end border  bg-black text-white rounded-md border-black hover:bg-white hover:border-black hover:text-black" variant="outline-light" type="button"  onClick={() => gameAnalysis(game.appid)} >analyze</Button>
-                  </Accordion.Body>
-                </Accordion.Item>
-              )
-            })
-          }
-        </Accordion>
+        <>
+          <Accordion>
+            {searchResult?.length == 0 && 
+                <div className="text-center">We're sorry, "{gameTitle}" is not available in Steam! 
+                  <br/><br/>
+                  <Button className="border rounded-md border-black hover:bg-white hover:border-black hover:text-black" variant="dark" type="button" onClick={() => setSearch(false)}>try again</Button>
+                </div> 
+              }
+            {
+              searchResult?.map(game =>{
+                return(
+                  <Accordion.Item Key={game.appid} className="border border-black">
+                    <Accordion.Body className="grid grid-cols-1 p-3">
+                      <Image style={{verticalAlign: "center" }}src={game.logo} rounded /> 
+                      <p class="text-centered">{game.name }</p>
+                      <Button className="place-self-end border  border rounded-md border-black hover:bg-white hover:border-black hover:text-black" variant="dark" type="button"  onClick={() => gameAnalysis(game.appid)} >analyze</Button>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                )
+              })
+            }
+          </Accordion>
+          <br/><br/>
+          <div className="text-center"><Button className="border rounded-md border-black hover:bg-white hover:border-black hover:text-black" variant="dark" type="button" onClick={() => setSearch(false)}>try again</Button></div>
+          
+        </>
       )
     }
 
