@@ -109,7 +109,7 @@ def get_reviewSummary(appid):
     res = requests.get(url=steam_url+'appreviews/'+appid, params=params).json()
     summary["total"] = res["query_summary"]["total_reviews"]
     summary["positive"] = res["query_summary"]["total_positive"]
-    summary["score"] = summary["positive"]/ summary["total"]*100
+    summary["score"] = summary["positive"]/ summary["total"]*100 if summary["total"] else 0
     return summary
 
 # get_reviewSummary("1222670")

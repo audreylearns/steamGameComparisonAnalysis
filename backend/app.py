@@ -36,32 +36,30 @@ def search():
 # http://127.0.0.1:5000/api/game?id=1222670
 @app.route("/api/game")
 def game():
-    id = request.args.get('id') 
-    
-    # display data...sample 202589
     game = {}
-    game["id"] = id
+    game["id"] = request.args.get('id') 
 
     game["details"] = fetch.get_game_details(game["id"]) 
     if game["details"] != "game unreleased" :
         game["RevSummary"] = fetch.get_reviewSummary(game["id"])
+        if game["RevSummary"]["total"] != 0:
+            data = fetch.get_rev(game["id"], 300)
+            df = analysis.remove_noise(data)
+            df = analysis.filterby_score(df)
+            df = analysis.sentiment_score(df)
 
-        data = fetch.get_rev(game["id"], 300)
-        df = analysis.remove_noise(data)
-        df = analysis.filterby_score(df)
-        df = analysis.sentiment_score(df)
+            game["result"] = analysis.polarity_percentage(df)
+            
+            game["pos_review"] = analysis.review_sample(df, 'pos')
+            game["neg_review"] = analysis.review_sample(df, 'neg')
+            game["neu_review"] = analysis.review_sample(df, 'neu')
 
-        game["result"] = analysis.polarity_percentage(df)
-        
-        game["pos_review"] = analysis.review_sample(df, 'pos')
-        game["neg_review"] = analysis.review_sample(df, 'neg')
-        game["neu_review"] = analysis.review_sample(df, 'neu')
-
-        df = analysis.cluster_clean(df)
-        game["keywords"] = analysis.top_cluster(df)
-
-        return jsonify(game)
-    return jsonify(game["details"] ) 
+            df = analysis.cluster_clean(df)
+            game["keywords"] = analysis.top_cluster(df)
+            return jsonify(game)
+        else:
+            return jsonify({"error": "No reviews found"})
+    return jsonify({"error": "Game unreleased"})
     
 
 

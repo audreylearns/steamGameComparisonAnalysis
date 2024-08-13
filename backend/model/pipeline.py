@@ -146,9 +146,8 @@ def sentiment_score(dataframe):
 def polarity_percentage(df):
     total_processed = len(df.index)
     result = df['sentiment'].value_counts().to_dict()
-    result[1] = round((result[1]/total_processed) * 100)
-    result[0] = round((result[0]/total_processed) * 100)
-    result[-1] = round((result[-1]/total_processed) * 100)
+    for score in result:
+        result[score] = round((result[score]/total_processed) * 100)
     return result
 
 
