@@ -59,9 +59,9 @@ export default function GameData({id}){
                                         </Container>
                                         <br/>
                                         <span class="text-sm">{data.details.short_description}<br/><br/></span>
-                                        {data.details.genres.map((genre)=> (
-                                            <span class="text-xs font-light">{ genre.description  } </span>
-                                        ))}
+                                        {data.details.genres.map((genre,index)=> {
+                                            return(<span key={index} className="text-xs font-light">{ genre.description  } </span>)
+                                        })}
                                                                 
                                         <div className="text-sm p-2 bg-slate-200 border-black border-y-2">
                                             <p>STEAM scored {data.details.name} at <u>{Math.round(data.RevSummary.score)}% out of {data.RevSummary.total} (english) reviews!</u></p><br/>
@@ -169,9 +169,10 @@ export default function GameData({id}){
                                         <br/>
                                         <p  className="font-bold text-center">Reviews Clustering Analysis</p><br/>
                                         <p className="text-xs"> <u>TOP 7 words</u>: 
-                                        {data.keywords?.map((w)=> (
-                                            <span className="text-xs font-light">{  w  } </span>
-                                        ))}
+                                        {data.keywords?.map((w, index) =>{
+                                            return(<span key={index} className="text-xs font-light">{  w  } </span> )
+                                            
+                                        })}
                                         </p>
                 
                                     </div><br/>
