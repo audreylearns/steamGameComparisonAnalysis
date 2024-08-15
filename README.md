@@ -1,7 +1,7 @@
 # StEAM REVIEW SENTIMENT ANALYSIS
 ***
 A Full-stack Dockerized A Flask-React Dockerized Application
-![App Preview](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "App Preview")
+![App Preview](https://github.com/audreylearns/steamGameComparisonAnalysis/blob/main/app_preview.gif "App Preview")
 
 ***
 - Performs a sentiment analysis and text clustering
@@ -28,6 +28,9 @@ A Full-stack Dockerized A Flask-React Dockerized Application
 - Tokenizer - break down of human language for machine learning analysis
 - Lemmatize - the process of reducing the different forms of a word to one single form
 - Docker Compose - runs a network of 2 containers: machine learning model flask-backend and react front end
+
+![Sentiment](https://github.com/audreylearns/steamGameComparisonAnalysis/blob/main/prev_2.png "Sentiment Preview")
+![Clustering](https://github.com/audreylearns/steamGameComparisonAnalysis/blob/main/prev_3.png "Clustering Preview")
 ***
 Owner: Audrey Duzon GitHub: https://github.com/audreylearns Release Verssion: 1 - 08/15/2024
 
