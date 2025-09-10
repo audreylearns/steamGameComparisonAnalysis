@@ -29,7 +29,7 @@ pd.set_option('display.max_columns', None)
 # returns a dataframe of steam reviews, with added columns: score &
 def remove_noise(data):
     df = pd.json_normalize(data,max_level=1)
-    df.drop(columns=['timestamp_created', 'timestamp_updated','language', 'recommendationid', 'hidden_in_steam_china', 'steam_china_location','author.steamid'],axis=1, inplace=True)
+    df.drop(columns=['timestamp_created', 'timestamp_updated','language', 'recommendationid','author.steamid'],axis=1, inplace=True)
     
     # rm tags, [any]
     df['review'] = df['review'].replace('\[.*?\]', '', regex=True)
