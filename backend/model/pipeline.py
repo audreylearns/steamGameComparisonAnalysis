@@ -177,8 +177,8 @@ def cluster_clean(df):
     df['review'] = df['review'].replace('[^A-Za-z\s]', '', regex=True)
     token_list = df['review'].apply(tokenize).sum()
     tagged_tokens = pos_tag(token_list)
-    filtered_words = [w for w, tag in tagged_tokens if tag.startswith('NN') or tag.startswith('JJ')]
-    filtered_words = [w for w in token_list if not w in stop_words]
+    filtered_words = [w for w, tag in tagged_tokens if (tag.startswith('NN') or tag.startswith('JJ')) and w not in stop_words]
+    # filtered_words = [w for w in token_list if not w in stop_words]
     lem_list = []
     for w in filtered_words:
         lem_list.append(wnl.lemmatize(w))
